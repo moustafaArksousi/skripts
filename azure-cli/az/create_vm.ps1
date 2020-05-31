@@ -1,0 +1,1 @@
+az vm create --resource-group Dirks_Ressourcen --name weekendskripted --admin-username dikuever --admin-password 12.14Z_DsdlS --location westeurope --public-ip-address-allocation dynamic --image UbuntuLTS --size Standard_D2s_v3 --vnet-name Dirks_Ressourcen-vnet --subnet default --custom-custom-data cloud-init-jira.txt
