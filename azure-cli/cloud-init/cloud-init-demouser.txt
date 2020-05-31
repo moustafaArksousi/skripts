@@ -1,0 +1,27 @@
+#cloud-config
+# Add groups to the system
+# The following example adds the ubuntu group with members 'root' and 'sys'
+# and the empty group cloud-users.
+groups:
+  - cloud-users
+
+# Add users to the system. Users are added after groups are added.
+users:
+  - default
+  - name: demouser
+    gecos: Demo User
+    primary_group: users
+    groups: cloud-users
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0NjIUMy65rJiQxvJY9EMI2TxhbcdBrqbIPGvZlm/SMdBNicQgmo8oAVd5YUo9gEU0neuCN8+lpP71T2xVxfbdPrhPzMgzo1THQdbE6hEQDMMR5BpiPbd0TnVs8mdXl6Di6LLiI31BhFsD6KSRfbTqRqTGk7yrpqAG1FOnH81rBZnM8q7PE6KG7mDtS/N3Fj68i/u8cInooj6IUbopxou19igmS9s3TL9OLC+vqUoR9lA8c18KARYdIcNMFRs6u2Pu1ibWGopuYXVLQ7u2TacH5nq6MOMrtW8qWaDu7uWkTV+0L0M1PfsjS/5BV16nM6kML55p7JgI6v0pO6aLjgzj dikuever@cloudhub
+
+apt_update: true
+apt_upgrade: true
+packages:
+  - nmon
+  - openjdk-8-jre-headless
+byobu_by_default: system
+bootcmd:
+  - mkdir -p /opt/ApacheDS
+  - chmod 0775 /opt/ApacheDS    

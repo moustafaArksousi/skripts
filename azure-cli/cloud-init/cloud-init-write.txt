@@ -1,0 +1,54 @@
+#cloud-config
+
+# Updaten und installieren von zwei weiteren Paketen
+apt_update: true
+apt_upgrade: true
+packages:
+  - nmon
+  - openjdk-8-jre-headless
+byobu_by_default: system
+
+# Hinzufügen von Gruppen
+# Gruppe cloud-users wird hinzugefügt
+groups:
+  - cloud-users
+
+# User werden hinzugefügt. Users werden nach Gruppen hinzugefügt
+users:
+  - default
+  - name: demouser
+    gecos: Demo User
+    primary_group: users
+    groups: cloud-users
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0NjIUMy65rJiQxvJY9EMI2TxhbcdBrqbIPGvZlm/SMdBNicQgmo8oAVd5YUo9gEU0neuCN8+lpP71T2xVxfbdPrhPzMgzo1THQdbE6hEQDMMR5BpiPbd0TnVs8mdXl6Di6LLiI31BhFsD6KSRfbTqRqTGk7yrpqAG1FOnH81rBZnM8q7PE6KG7mDtS/N3Fj68i/u8cInooj6IUbopxou19igmS9s3TL9OLC+vqUoR9lA8c18KARYdIcNMFRs6u2Pu1ibWGopuYXVLQ7u2TacH5nq6MOMrtW8qWaDu7uWkTV+0L0M1PfsjS/5BV16nM6kML55p7JgI6v0pO6aLjgzj dikuever@cloudhub
+
+# erstellen von Verzeichnissen und Herunterladen von Software
+bootcmd:
+  - mkdir -p /opt/atlassian
+  - mkdir -p /opt/atlassian/jira-home
+  - chmod 0775 /opt/atlassian
+  - chmod 0775 /opt/atlassian/jira-home
+  - wget https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-8.6.1.tar.gz
+  - tar xvzf atlassian-jira-software-8.6.1.tar.gz -C /opt/atlassian
+  - touch /opt/atlassian/writedatei.txt
+# bis zu diesem Punkt funktioniert das Skript
+# Ab hier kommen neue Commands hinzu  
+#  - chown -R demouser:cloud-users /opt
+
+write_files:
+  - path: /opt/atlassian/writedatei.txt
+    permissions: 0644
+    content: |
+      Dies ist ein Test.
+      Der Test hat funktioniert.
+      Gratuliere!!!
+  - path: /opt/atlassian/atlassian-jira-software-8.6.1-standalone/atlassian-jira/WEB-INF/classes/jira-application.properties
+    permissions: 0644
+    content: |
+      # Do not modify this file unless instructed. It is here to store the location of the JIRA home directory only and is typically written to by the installer.
+      jira.home =/opt/atlassian/jira-home
+# Skript funktioniert
+# allerdings wird die Ownership auf jira-home noch nicht richtig gesetzt
+      
