@@ -1,7 +1,9 @@
 #cloud-config
-# Add groups to the system
-# The following example adds the ubuntu group with members 'root' and 'sys'
-# and the empty group cloud-users.
+# Bei dieser Datei handelt es sich um eine Testversion
+# Es wird eine neue Gruppe "cloud-users" hinzugefügt
+# Es wird ein neuer User "demouser" hinzugefügt
+# Der User "demouser" wird der neuen Gruppe "cloud-users" hinzugefügt
+# Der User wird in der visudo Datei mit allen Rechten versehen
 groups:
   - cloud-users
 
@@ -12,16 +14,18 @@ users:
     gecos: Demo User
     primary_group: users
     groups: cloud-users
-    sudo: ALL=(ALL) NOPASSWD:ALL
-    ssh_authorized_keys:
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0NjIUMy65rJiQxvJY9EMI2TxhbcdBrqbIPGvZlm/SMdBNicQgmo8oAVd5YUo9gEU0neuCN8+lpP71T2xVxfbdPrhPzMgzo1THQdbE6hEQDMMR5BpiPbd0TnVs8mdXl6Di6LLiI31BhFsD6KSRfbTqRqTGk7yrpqAG1FOnH81rBZnM8q7PE6KG7mDtS/N3Fj68i/u8cInooj6IUbopxou19igmS9s3TL9OLC+vqUoR9lA8c18KARYdIcNMFRs6u2Pu1ibWGopuYXVLQ7u2TacH5nq6MOMrtW8qWaDu7uWkTV+0L0M1PfsjS/5BV16nM6kML55p7JgI6v0pO6aLjgzj dikuever@cloudhub
+    sudo: ALL=(ALL:ALL) NOPASSWD:ALL
+    passwd: 12.14Z_DsdlS
+
+# ab hier werden Updates geprüft und vorhandene Updates installiert
+# nmon und openJDK8 werden installiert
+# es wird ein Verzeichnis mit erweiterten Rechten erstellt (hier für ApacheDS)
 
 apt_update: true
 apt_upgrade: true
 packages:
   - nmon
   - openjdk-8-jre-headless
-byobu_by_default: system
 bootcmd:
   - mkdir -p /opt/ApacheDS
   - chmod 0775 /opt/ApacheDS    
