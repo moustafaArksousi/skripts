@@ -22,7 +22,10 @@ runcmd:
   - wget https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-8.5.4.tar.gz
   - tar xvzf atlassian-jira-software-8.5.4.tar.gz -C /opt/atlassian
   - mv atlassian-jira-software-8.5.4.tar.gz /opt/atlassian/beistellungen
+  - ln -sf /opt/atlassian/atlassian-jira-software-8.5.4-standalone /opt/atlassian/jira
   - touch /opt/atlassian/info.txt
+mounts:
+ - [  "/dev/sdc" , "/opt/atlassian/jira-home" ]
 write_files:
   - path: /opt/atlassian/info.txt
     permissions: 0644
