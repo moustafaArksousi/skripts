@@ -6,6 +6,13 @@ packages:
   - openjdk-8-jre-headless
 groups:
   - cloud-users
+users:
+  - default
+  - name: ldapuser
+    gecos: LDAP User
+    primary_group: ldapuser
+    groups: cloud-users
+    passwd: 12.14Z_DsdlS  
 runcmd:
   - mkdir -p /opt/ApacheDS
   - chmod 0775 /opt/ApacheDS
