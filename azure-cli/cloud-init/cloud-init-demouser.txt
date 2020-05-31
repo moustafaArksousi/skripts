@@ -1,28 +1,11 @@
 #cloud-config
-# Bei dieser Datei handelt es sich um eine Testversion
-# ab hier werden Updates geprüft und vorhandene Updates installiert
-# nmon und openJDK8 werden installiert
+# Diese Konfigurationsdatei ist die ohne den Userbereich getestet
+# Es werden alle Befehle ausgeführt
 apt_update: true
 apt_upgrade: true
 packages:
   - nmon
   - openjdk-8-jre-headless
-# Es wird eine neue Gruppe "cloud-users" hinzugefügt
-# Es wird ein neuer User "demouser" hinzugefügt
-# Der User "demouser" wird der neuen Gruppe "cloud-users" hinzugefügt
-# Der User wird in der visudo Datei mit allen Rechten versehen
-groups:
-  - cloud-users
-# Add users to the system. Users are added after groups are added.
-users:
-  - default
-  - name: demouser
-    gecos: Demo User
-    primary_group: users
-    groups: cloud-users
-    sudo: ALL=(ALL:ALL) NOPASSWD:ALL
-    passwd: 12.14Z_DsdlS
-# es wird ein Verzeichnis mit erweiterten Rechten erstellt (hier für ApacheDS)
-bootcmd:
+runcmd:
   - mkdir -p /opt/ApacheDS
   - chmod 0775 /opt/ApacheDS    
