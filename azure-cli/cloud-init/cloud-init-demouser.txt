@@ -6,6 +6,9 @@ apt_upgrade: true
 packages:
   - nmon
   - openjdk-8-jre-headless
-runcmd:
-  - mkdir -p /opt/ApacheDS
-  - chmod 0775 /opt/ApacheDS    
+bootcmd:
+ - mkdir -p /opt/ApacheDS
+ - chmod 0775 /opt/ApacheDS
+ - wget http://apache.mirror.iphh.net//directory/apacheds/dist/2.0.0.AM25/apacheds-2.0.0.AM25-64bit.bin
+ - chmod +x apacheds-2.0.0.AM25-64bit.bin
+ - mv apacheds-2.0.0.AM25-64bit.bin /opt/ApacheDS 
