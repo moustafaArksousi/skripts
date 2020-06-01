@@ -1,0 +1,11 @@
+az vm create --resource-group rg-ewe-ent \
+             --name $appname \
+             --admin-username entadmin \
+             --admin-password 50.14Z_DsdlS \
+             --location westeurope \
+             --image UbuntuLTS \
+             --size Standard_D2s_v3 \
+             --private-ip-address 10.28.2.50 \
+             --vnet-name vnet-btc-ams \
+             --subnet default \
+             --custom-custom-data cloud-init-jira.txt
