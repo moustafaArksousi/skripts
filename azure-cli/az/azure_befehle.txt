@@ -1,0 +1,5 @@
+# Ausgabe aller zugeordneten Subscriptions
+az account list --output table
+
+# Auswahl einer neuen Subscription als default
+az account  set --subscription "BU-ASM-CIDS"
