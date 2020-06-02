@@ -1,0 +1,17 @@
+
+# Nginx JIRA Software Konfiguration
+# Maintainer: Dirk Küver-Christen
+# Quelle: https://confluence.atlassian.com/jirakb/configure-jira-server-to-run-behind-a-nginx-reverse-proxy-426115340.html
+# Context Path im Jira Connector ist "" (leer)
+
+server {
+    listen jira-test.e-konzern.de:80;
+    server_name jira-test.e-konzern.de;
+    location / {
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Server $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://localhost:8080;
+        client_max_body_size 10M;
+    }
+}
